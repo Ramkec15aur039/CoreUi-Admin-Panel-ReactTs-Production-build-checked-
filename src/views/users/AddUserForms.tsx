@@ -23,8 +23,7 @@ import { postUserData } from "../../api/create";
 import { getUserList } from "../../api/list";
 
 const BasicForms = (props: any) => {
-  const [collapsed, setCollapsed] = React.useState(true);
-  const [showElements, setShowElements] = React.useState(true);
+
   const [modelState, setModelState] = useState("");
 
   /*********************************** Add User State ****************************************/
@@ -34,9 +33,8 @@ const BasicForms = (props: any) => {
   const [officePhone, setofficePhone] = useState("");
   const [mobile, setmobile] = useState("");
   const [fax, setFax] = useState("");
-  const [rowsPerPage, setRowsPerPage] = useState(25);
   const [large, setLarge] = useState(false);
-  const [page, setPage] = React.useState(0);
+  const [page] = React.useState(0);
   const [role, setRole] = useState("");
 
   /***********************************Response Handler****************************************/

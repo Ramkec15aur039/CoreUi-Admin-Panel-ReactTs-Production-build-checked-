@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createRef } from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
 import {
   CRow,
@@ -12,15 +12,8 @@ import { DocsLink } from '../../../reusable'
 
 
 const ThemeView = () => {
-  const [color, setColor] = useState('rgb(255, 255, 255)')
-  const ref = createRef()
-
-  // useEffect(() => {
-  //   const el = ref.current.parentNode.firstChild
-  //   const varColor = window.getComputedStyle(el).getPropertyValue('background-color')
-  //   setColor(varColor)
-  // }, [ref])
-
+  const [color] = useState('rgb(255, 255, 255)')
+  
   return (
     <table className="table w-100">
       <tbody>

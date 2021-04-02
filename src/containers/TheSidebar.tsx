@@ -15,14 +15,14 @@ import {
 import CIcon from "@coreui/icons-react";
 import {logoNegative} from "../assets/icons/logo-negative";
 import {sygnet} from "../assets/icons/sygnet";
-import { freeSet } from '@coreui/icons'
+import {RootState} from "../redux/reducers";
 
 // sidebar nav config
 import navigation from "./_nav";
-import Logo from "./a.svg"
+
 const TheSidebar = () => {
   const dispatch = useDispatch();
-  const show = "responsive";
+  const show:any = useSelector((state: RootState) => state.change_State.sidebarShow)
   console.log("Redux:",show);
 
   return (
@@ -31,7 +31,6 @@ const TheSidebar = () => {
       onShowChange={(val) => dispatch({ type: "set", sidebarShow: val })}
     >
       <CSidebarBrand className="d-md-down-none" to="/">
-        {/* <img src={Logo} width="200px" height="50px" alt="jdfk"/> */}
         <CIcon
           className="c-sidebar-brand-full"
           content={logoNegative}

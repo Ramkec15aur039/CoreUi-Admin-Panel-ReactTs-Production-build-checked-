@@ -1,9 +1,9 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { usersData } from "./UsersData";
 import { TestAction } from "../../redux/actions/testAction";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 
 const User = ({ match }) => {

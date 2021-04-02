@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   CHeader,
   CToggler,
@@ -10,8 +10,8 @@ import {
   CSubheader,
   CBreadcrumbRouter,
   CLink
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+} from '@coreui/react';
+import CIcon from '@coreui/icons-react';
 
 // routes config
 import routes from '../routes'
@@ -21,21 +21,21 @@ import {
   TheHeaderDropdownMssg,
   TheHeaderDropdownNotif,
   TheHeaderDropdownTasks
-}  from './index'
+}  from './index';
+import {RootState} from "../redux/reducers";
 
-import {changeStateAction} from "../redux/actions/changeStateAction"
 
 const TheHeader = () => {
   const dispatch = useDispatch()
-  //const sidebarShow = useSelector(state => state.change_State.sidebarShow)
+  const sidebarShow:any = useSelector((state: RootState) => state.change_State.sidebarShow)
 
   const toggleSidebar = () => {
-    const val = [true, 'responsive'].includes("responsive") ? false : 'responsive'
+    const val = [true, 'responsive'].includes(sidebarShow) ? false : 'responsive'
     dispatch({type: 'set', sidebarShow: val})
   }                                   
 
   const toggleSidebarMobile = () => {
-    const val = [false, 'responsive'].includes("responsive") ? true : 'responsive'
+    const val = [false, 'responsive'].includes(sidebarShow) ? true : 'responsive'
     dispatch({type: 'set', sidebarShow: val})
   }
 

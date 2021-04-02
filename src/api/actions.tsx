@@ -1,5 +1,4 @@
-import React from "react";
-import { hostConfig, env } from "../config"; //env
+import { hostConfig } from "../config"; //env
 
 /******************************** Response Handler ************************************/
 const responseStatusHandler = (response) => {
@@ -8,7 +7,6 @@ const responseStatusHandler = (response) => {
       return response;
     case 401:
       return { error: "Unauthorized" };
-      break;
     case 402:
       return { error: "Payment Required" };
     case 403:

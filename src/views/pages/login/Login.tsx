@@ -16,7 +16,7 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react';
 import { TestAction } from "../../../redux/actions/testAction";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Login = (props:any) => {
   const dispatch = useDispatch();

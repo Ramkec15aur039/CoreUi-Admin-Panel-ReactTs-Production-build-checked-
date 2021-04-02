@@ -10,3 +10,5 @@ const allReducer = combineReducers({
 });
 
 export default allReducer;
+
+export type RootState = ReturnType<typeof allReducer>

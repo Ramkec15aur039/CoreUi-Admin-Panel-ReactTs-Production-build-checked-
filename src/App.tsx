@@ -6,8 +6,7 @@ import {
   RouteComponentProps,
 } from "react-router-dom";
 import "./scss/style.scss";
-import routes from "./routes";
-import Table from "./views/tables/Tables"
+
 
 const loading = (
   <div className="pt-3 text-center">

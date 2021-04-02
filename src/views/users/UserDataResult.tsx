@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { getUserList } from "../../api/list";
 import Users from "./Users";
-import { storeUserDataAction } from "../../redux/actions/storeUserDataAction";
-import { object } from "prop-types";
 
 export default function UsersDataResult() {
   const [users, setUsers]: any = useState([]);
-  const [rowsPerPage, setRowsPerPage] = React.useState(25);
+  const [rowsPerPage] = React.useState(25);
   const [totalResults, setTotalResults] = useState(0);
-  const [page, setPage] = React.useState(0);
+  const [page] = React.useState(0);
 
   /***********************************Response Handler****************************************/
   const responseHandler = (res) => {
@@ -36,11 +34,12 @@ export default function UsersDataResult() {
     let currentPage = page + 1;
     getUserList({ currentPage, rowsPerPage }).then((res) => {
       if (responseHandler(res)) {
-        res.results.map((item: any, index) => {
+        res.results.forEach((item: any, index) => {
           item.name = item.firstName + " " + item.lastName;
-          item.isActive =  (item.isActive == true) ? "active" : "Not Active";
+          item.isActive = item.isActive === true ? "active" : "Not Active";
+          return;
         });
-        setUsers((res.results).reverse());
+        setUsers(res.results.reverse());
         setTotalResults(res.totalResults);
       }
     });
@@ -48,6 +47,7 @@ export default function UsersDataResult() {
 
   useEffect(() => {
     initialUserData();
+    // eslint-disable-next-line
   }, []);
 
   // Sample Redux

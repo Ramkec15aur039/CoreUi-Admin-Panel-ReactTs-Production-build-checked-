@@ -5,7 +5,7 @@ import {
   TheFooter,
   TheHeader
 } from './index';
-import Charts from "../views/charts/Charts"
+
 
 const TheLayout = (props:any) => {
 

@@ -10,7 +10,6 @@ import {
   CRow,
   CPagination,
   CButton,
-  CLink,
   CModal,
   CModalBody,
   CModalFooter,
@@ -102,7 +101,7 @@ const Users = (props: any) => {
 
   //To Update values in UserData
   const userDataFunctionCall = usersDataFn(data);
-  //console.log("Props data array->", data);
+  console.log("Props data array->", userDataFunctionCall);
 
   return (
     <>
