@@ -8,7 +8,6 @@ import {
   CCol,
   CDataTable,
   CRow,
-  CPagination,
   CButton,
   CModal,
   CModalBody,
@@ -22,6 +21,7 @@ import * as RemixIcon from "react-icons/ri";
 import { deleteUser } from "../../api/delete";
 import EditUserForms from "./EditUser";
 import { usersDataFn } from "./UsersData";
+import Pagination from "../pagination/Pagination";
 
 const getBadge = (status) => {
   switch (status) {
@@ -62,11 +62,6 @@ const responseHandler = (res) => {
 
 const Users = (props: any) => {
   const history = useHistory();
-  const queryPage = useLocation().search.match(/page=([0-9]+)/);
-  console.log("Querypage:->",queryPage);
-  const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1);
-  console.log("Currentpage:->",currentPage);
-  const [page, setPage] = useState(currentPage);
   const [onClickRow, setOnClickRow] = useState(true);
   let data: any = props.userData;
   const [warning, setWarning] = useState(false);
@@ -75,22 +70,8 @@ const Users = (props: any) => {
   const [modelStateDelete, setModelStateDelete] = useState("");
   const [large, setLarge] = useState(false);
 
-  //Pagination State
-  // const [warning, setWarning] = useState(false);
-  // const [deleteId, setDeleteId] = useState("");
-  // const [selectedUserData, setSelectedUserData] = useState([]);
-  // const [modelStateDelete, setModelStateDelete] = useState("");
-
-  const pageChange = (newPage) => {
-    currentPage !== newPage && history.push(`/users?page=${newPage}`);
-  };
-
-  useEffect(() => {
-    currentPage !== page && setPage(currentPage);
-  }, [currentPage, page]);
-
   const getApiDelete = () => {
-    props.getApiUpdated();
+    props.getUsersAfterDelete(props.apiPage);
     setWarning(false);
   };
 
@@ -102,6 +83,8 @@ const Users = (props: any) => {
   //To Update values in UserData
   const userDataFunctionCall = usersDataFn(data);
   console.log("Props data array->", userDataFunctionCall);
+
+  console.log("TotalResult props->",props.totalResult);
 
   return (
     <>
@@ -132,7 +115,6 @@ const Users = (props: any) => {
                 hover
                 striped
                 itemsPerPage={5}
-                activePage={page}
                 onRowClick={(items) =>
                   onClickRow ? history.push(`/users/${items.id}`) : null
                 }
@@ -180,13 +162,15 @@ const Users = (props: any) => {
                   },
                 }}
               />
-              <CPagination
-                activePage={page}
-                onActivePageChange={pageChange}
-                pages={20}
-                doubleArrows={false}
-                align="center"
-              />
+              {props.totalResult > 5 ? (
+                <Pagination
+                  pages={props.pages}
+                  nextPage={props.nextPage}
+                  currentPage={props.currentPage}
+                />
+              ) : (
+                ""
+              )}
             </CCardBody>
           </CCard>
         </CCol>

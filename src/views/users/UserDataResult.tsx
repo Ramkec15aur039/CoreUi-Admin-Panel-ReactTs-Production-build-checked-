@@ -4,9 +4,12 @@ import Users from "./Users";
 
 export default function UsersDataResult() {
   const [users, setUsers]: any = useState([]);
-  const [rowsPerPage] = React.useState(25);
-  const [totalResults, setTotalResults] = useState(0);
+  const [rowsPerPage] = useState(5);
   const [page] = React.useState(0);
+  const [totalResults, setTotalResults] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [apiPage, setApiPage] = useState(1);
+  console.log("Current Page:", currentPage);
 
   /***********************************Response Handler****************************************/
   const responseHandler = (res) => {
@@ -39,7 +42,7 @@ export default function UsersDataResult() {
           item.isActive = item.isActive === true ? "active" : "Not Active";
           return;
         });
-        setUsers(res.results.reverse());
+        setUsers(res.results);
         setTotalResults(res.totalResults);
       }
     });
@@ -50,9 +53,53 @@ export default function UsersDataResult() {
     // eslint-disable-next-line
   }, []);
 
-  // Sample Redux
-  console.log("Users from userDataResult:", users);
-  console.log("Total Result from userDataResult:", totalResults);
+  //Pagination
+  const nextPage = (currentPage) => {
+    console.log("Next Page method working!!!", currentPage);
+    getUserList({ currentPage, rowsPerPage }).then((res) => {
+      if (responseHandler(res)) {
+        res.results.forEach((item: any, index) => {
+          item.name = item.firstName + " " + item.lastName;
+          item.isActive = item.isActive === true ? "active" : "Not Active";
+          return;
+        });
+        setUsers(res.results);
+        setTotalResults(res.totalResults);
+        setCurrentPage(currentPage);
+        setApiPage(res.page);
+      }
+    });
+  };
 
-  return <Users userData={users} getApiUpdated={initialUserData} />;
+  //Get users for after delete request
+  const getUsersAfterDelete = (currentPage) => {
+    console.log("Next Page method working!!!", currentPage);
+    getUserList({ currentPage, rowsPerPage }).then((res) => {
+      if (responseHandler(res)) {
+        res.results.forEach((item: any, index) => {
+          item.name = item.firstName + " " + item.lastName;
+          item.isActive = item.isActive === true ? "active" : "Not Active";
+          return;
+        });
+        setUsers(res.results);
+        setTotalResults(res.totalResults);
+        setApiPage(res.page);
+      }
+    });
+  };
+
+  const numberPages = Math.floor(totalResults / 5);
+  console.log("Number pages check:->", numberPages);
+
+  return (
+    <Users
+      userData={users}
+      totalResult={totalResults}
+      getUsersAfterDelete={getUsersAfterDelete}
+      apiPage={apiPage}
+      pages={numberPages}
+      nextPage={nextPage}
+      currentPage={currentPage}
+    />
+  );
 }
