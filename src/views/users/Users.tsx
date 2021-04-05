@@ -93,7 +93,6 @@ const Users = (props: any) => {
           <CCard>
             <CCardHeader>
               Users
-              <small className="text-muted"> example</small>
               <CButton
                 color="success"
                 className="buttonPosition"

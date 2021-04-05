@@ -7,6 +7,7 @@ export default function UsersDataResult() {
   const [rowsPerPage] = useState(5);
   const [page] = React.useState(0);
   const [totalResults, setTotalResults] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [apiPage, setApiPage] = useState(1);
   console.log("Current Page:", currentPage);
@@ -35,7 +36,8 @@ export default function UsersDataResult() {
 
   const initialUserData = () => {
     let currentPage = page + 1;
-    getUserList({ currentPage, rowsPerPage }).then((res) => {
+    let sortBy = "createdAt:desc"
+    getUserList({ currentPage, rowsPerPage, sortBy}).then((res) => {
       if (responseHandler(res)) {
         res.results.forEach((item: any, index) => {
           item.name = item.firstName + " " + item.lastName;
@@ -44,6 +46,7 @@ export default function UsersDataResult() {
         });
         setUsers(res.results);
         setTotalResults(res.totalResults);
+        setTotalPages(res.totalPages);
       }
     });
   };
@@ -56,7 +59,8 @@ export default function UsersDataResult() {
   //Pagination
   const nextPage = (currentPage) => {
     console.log("Next Page method working!!!", currentPage);
-    getUserList({ currentPage, rowsPerPage }).then((res) => {
+    let sortBy = "createdAt:desc"
+    getUserList({ currentPage, rowsPerPage, sortBy}).then((res) => {
       if (responseHandler(res)) {
         res.results.forEach((item: any, index) => {
           item.name = item.firstName + " " + item.lastName;
@@ -67,6 +71,7 @@ export default function UsersDataResult() {
         setTotalResults(res.totalResults);
         setCurrentPage(currentPage);
         setApiPage(res.page);
+        setTotalPages(res.totalPages);
       }
     });
   };
@@ -74,7 +79,8 @@ export default function UsersDataResult() {
   //Get users for after delete request
   const getUsersAfterDelete = (currentPage) => {
     console.log("Next Page method working!!!", currentPage);
-    getUserList({ currentPage, rowsPerPage }).then((res) => {
+    let sortBy = "createdAt:desc"
+    getUserList({ currentPage, rowsPerPage, sortBy }).then((res) => {
       if (responseHandler(res)) {
         res.results.forEach((item: any, index) => {
           item.name = item.firstName + " " + item.lastName;
@@ -84,12 +90,13 @@ export default function UsersDataResult() {
         setUsers(res.results);
         setTotalResults(res.totalResults);
         setApiPage(res.page);
+        setTotalPages(res.totalPages);
       }
     });
   };
 
-  const numberPages = Math.floor(totalResults / 5);
-  console.log("Number pages check:->", numberPages);
+  //const numberPages = Math.floor(totalResults / 5);
+  //console.log("Number pages check:->", numberPages);
 
   return (
     <Users
@@ -97,7 +104,7 @@ export default function UsersDataResult() {
       totalResult={totalResults}
       getUsersAfterDelete={getUsersAfterDelete}
       apiPage={apiPage}
-      pages={numberPages}
+      pages={totalPages}
       nextPage={nextPage}
       currentPage={currentPage}
       getApiUpdated={initialUserData}

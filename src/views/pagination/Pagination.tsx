@@ -2,8 +2,9 @@ import React from "react";
 import "./Pagination.css";
 
 export default function Pagination(props: any) {
+  console.log("From pagination:",props.pages);
   const pageLinks: any = [];
-  for (let i = 1; i <= props.pages + 1; i++) {
+  for (let i = 1; i <= props.pages; i++) {
     let active = props.currentPage === i ? "active" : "";
     pageLinks.push(
       <li key={i} className={`pagination ${active}`} onClick={() => props.nextPage(i)}>
@@ -21,18 +22,18 @@ export default function Pagination(props: any) {
               className={`pagination`}
               onClick={() => props.nextPage(props.currentPage - 1)}
             >
-              <span>&laquo;</span>
+              <span className="customSpan">&laquo;</span>
             </li>
           ) : (
             ""
           )}
           {pageLinks}
-          {props.currentPage < props.pages + 1 ? (
+          {props.currentPage < props.pages ? (
             <li
               className={`pagination`}
               onClick={() => props.nextPage(props.currentPage + 1)}
             >
-              <span>&raquo;</span>
+              <span className="customSpan">&raquo;</span>
             </li>
           ) : (
             ""

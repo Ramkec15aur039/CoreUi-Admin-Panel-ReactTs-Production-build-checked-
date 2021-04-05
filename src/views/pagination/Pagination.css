@@ -1,16 +1,17 @@
 .pagination {
   color: black;
-  padding: 8px 16px;
+  padding: 10px 20px;
   text-decoration: none;
   border: 1px solid #ddd;
   list-style-type: none;
   display: inline-block;
+  cursor: pointer;
 }
 
 .pagination.active {
-  background-color: #4CAF50;
+  background-color: blue;
   color: white;
-  border: 1px solid #4CAF50;
+  border: 1px solid blue;
 }
 
 .pagination:hover:not(.active) {
@@ -25,11 +26,16 @@
 .pagination:last-child {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-} 
-
-.pagination span{
-pointer-events: inherit;
 }
+
+.pagination span {
+  cursor: pointer;
+  padding-left:15px
+}
+
+/* .customSpan{
+  font-size: 15px;
+} */
 
 /* Bootstrap CSS */
 .container {
