@@ -100,6 +100,7 @@ export default function UsersDataResult() {
       pages={numberPages}
       nextPage={nextPage}
       currentPage={currentPage}
+      getApiUpdated={initialUserData}
     />
   );
 }

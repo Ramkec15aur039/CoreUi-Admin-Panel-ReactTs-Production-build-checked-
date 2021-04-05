@@ -25,6 +25,10 @@
 .pagination:last-child {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+} 
+
+.pagination span{
+pointer-events: inherit;
 }
 
 /* Bootstrap CSS */

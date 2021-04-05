@@ -1,14 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-import { usersData } from "./UsersData";
 import { TestAction } from "../../redux/actions/testAction";
 import { useDispatch } from "react-redux";
+import { getUserById } from "../../api/list";
 
 
 const User = ({ match }) => {
-  console.table(match);
-  console.log("User data from user:->>>>>", usersData);
+  const[usersData,setUsersData]:any = useState([]);
+
+  getUserById(match.params.id).then((res)=>{
+    res.forEach((item)=>{
+      item.isActive = item.isActive === true ? "active" : "Not Active";
+    })
+    setUsersData(res)}
+    );
+
   const user = usersData.find((user) => user.id.toString() === match.params.id);
   let userDetails: any = user
     ? Object.entries(user)
