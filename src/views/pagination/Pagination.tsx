@@ -2,7 +2,7 @@ import React from "react";
 import "./Pagination.css";
 
 export default function Pagination(props: any) {
-  console.log("From pagination:",props.pages);
+  console.log("From pagination:",props.currentPage);
   const pageLinks: any = [];
   for (let i = 1; i <= props.pages; i++) {
     let active = props.currentPage === i ? "active" : "";

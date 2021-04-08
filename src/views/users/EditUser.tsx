@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   CButton,
   CCard,
@@ -15,25 +15,8 @@ import {
 import { updateUserData } from "../../api/updates";
 
 const EditUserForms = (props) => {
-  const [values, setValues]: any = useState([]);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [officePhone, setOfficePhone] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [fax, setFax] = useState("");
-  const [role, setRole] = useState("");
-
-  //To set "User Data value" from "props" to "State"
-  useEffect(() => {
-    console.log("User Detail props-> firstName:", props.userData);
-    if (props.userData !== undefined) {
-      setValues({
-        ...props.userData,
-      });
-    }
-  }, [props.userData, setValues]);
-
+  const [values, setValues]: any = useState({...props.userData});
+  
   /***********************************Response Handler****************************************/
   const responseHandler = (res) => {
     if (res) {
@@ -59,14 +42,14 @@ const EditUserForms = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let user = {
-      firstName: firstName || props.userData.firstName,
-      lastName: lastName || props.userData.lastName,
-      email: email || props.userData.email,
-      officePhone: officePhone || props.userData.officePhone,
-      mobile: mobile || props.userData.mobile,
-      fax: fax || props.userData.fax,
-      role: role || props.userData.role
-    };
+      firstName:values.firstName,
+      lastName:values.lastName,
+      email:values.email,
+      officePhone:values.officePhone ,
+      mobile:values.mobile ,
+      fax:values.fax ,
+      role:values.role,
+    }
     console.log("From EditUserForm Submit section:", user);
     updateUserData(user, props.userData.id).then((res) => {
       if (responseHandler(res)) {
@@ -81,34 +64,29 @@ const EditUserForms = (props) => {
     e.preventDefault();
     const targetName = e.target.name;
     const value = e.target.value;
+    
     if (targetName === "firstName") {
-      setValues(value);
-      setFirstName(value);
+      values.firstName=value
     }
     if (targetName === "lastName") {
-      setValues(value);
-      setLastName(value);
+      values.lastName=value
     }
     if (targetName === "email") {
-      setValues(value);
-      setEmail(value);
+      values.email=value
     }
     if (targetName === "officePhone") {
-      setValues(value);
-      setOfficePhone(value);
+      values.officePhone=value
     }
     if (targetName === "mobile") {
-      setValues(value);
-      setMobile(value);
+      values.mobile=value
     }
     if (targetName === "fax") {
-      setValues(value);
-      setFax(value);
+      values.fax=value
     }
     if (targetName === "role") {
-      setValues(value);
-      setRole(value);
+      values.role=value
     }
+    setValues({...values})
   };
 
   return (

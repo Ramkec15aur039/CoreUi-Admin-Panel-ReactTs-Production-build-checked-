@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
+import { CCard, CCardBody, CCol, CRow } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { TestAction } from "../../redux/actions/testAction";
 import { useDispatch } from "react-redux";
 import { getUserById } from "../../api/list";
 
-const User = ({ match }) => {
+const User = (props: any) => {
   const [usersData, setUsersData]: any = useState([]);
   useEffect(() => {
-    getUserById(match.params.id).then((res) => {
+    getUserById(props.userId).then((res) => {
       res.forEach((item) => {
         item.isActive = item.isActive === true ? "active" : "Not Active";
       });
       setUsersData(res);
     });
     // eslint-disable-next-line
-  }, []);
-  const user = usersData.find((user) => user.id.toString() === match.params.id);
+  }, [props.userId]);
+  const user = usersData.find((user) => user.id.toString() === props.userId);
   let userDetails: any = user
     ? Object.entries(user)
     : [
@@ -34,14 +34,16 @@ const User = ({ match }) => {
 
   return (
     <CRow>
-      <CCol lg={6}>
+      <CCol lg={12}>
         <CCard>
-          <CCardHeader>id: {match.params.id}</CCardHeader>
           <CCardBody>
             <table className="table table-striped table-hover">
               <tbody>
                 {userDetails.map(([key, value], index) => {
-                  return key !== "id" && key !== "isAdmin" ? ( //Conditional mapping
+                  return key !== "id" &&
+                    key !== "isAdmin" &&
+                    key !== "createdBy" &&
+                    key !== "updatedBy" ? ( //Conditional mapping
                     <tr key={index.toString()}>
                       <td>{`${key}:`}</td>
                       <td>

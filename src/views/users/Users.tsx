@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import {
   CBadge,
   CCard,
@@ -22,6 +21,7 @@ import { deleteUser } from "../../api/delete";
 import EditUserForms from "./EditUser";
 import { usersDataFn } from "./UsersData";
 import Pagination from "../pagination/Pagination";
+import User from "./User";
 
 const getBadge = (status) => {
   switch (status) {
@@ -61,7 +61,6 @@ const responseHandler = (res) => {
 };
 
 const Users = (props: any) => {
-  const history = useHistory();
   const [onClickRow, setOnClickRow] = useState(true);
   let data: any = props.userData;
   const [warning, setWarning] = useState(false);
@@ -69,6 +68,9 @@ const Users = (props: any) => {
   const [selectedUserData, setSelectedUserData] = useState([]);
   const [modelStateDelete, setModelStateDelete] = useState("");
   const [large, setLarge] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [clickId, setClickId] = useState(false);
+ 
 
   const getApiDelete = () => {
     props.getUsersAfterDelete(props.apiPage);
@@ -76,7 +78,7 @@ const Users = (props: any) => {
   };
 
   const getApiForEdit = () => {
-    props.getApiUpdated();
+    props.getApiUpdated(props.apiPage);
     setLarge(false);
   };
 
@@ -84,7 +86,7 @@ const Users = (props: any) => {
   const userDataFunctionCall = usersDataFn(data);
   console.log("Props data array->", userDataFunctionCall);
 
-  console.log("TotalResult props->",props.totalResult);
+  console.log("User ID from Users->", userId, clickId);
 
   return (
     <>
@@ -115,7 +117,7 @@ const Users = (props: any) => {
                 striped
                 itemsPerPage={5}
                 onRowClick={(items) =>
-                  onClickRow ? history.push(`/users/${items.id}`) : null
+                  onClickRow ? (setUserId(items.id), setClickId(true)) : null
                 }
                 clickableRows
                 scopedSlots={{
@@ -193,7 +195,7 @@ const Users = (props: any) => {
               onClick={() => {
                 setWarning(!warning);
                 deleteUser(deleteId).then((res) => {
-                  console.log("Get in delete API running");
+                  // console.log("Get in delete API running");
                   if (responseHandler(res)) {
                     getApiDelete();
                   }
@@ -232,6 +234,24 @@ const Users = (props: any) => {
               userData={selectedUserData}
               getUpdatedData={getApiForEdit}
             />
+          </CModalBody>
+          <CModalFooter></CModalFooter>
+        </CModal>
+      ) : null}
+
+      {/******************* Model User on Row-Click **********************/}
+      {clickId ? (
+        <CModal
+          show={clickId}
+          color="info"
+          onClose={() => setClickId(!clickId)}
+          size="lg"
+        >
+          <CModalHeader closeButton>
+            <CModalTitle>User Id: {userId}</CModalTitle>
+          </CModalHeader>
+          <CModalBody>
+            <User userId={userId} />
           </CModalBody>
           <CModalFooter></CModalFooter>
         </CModal>

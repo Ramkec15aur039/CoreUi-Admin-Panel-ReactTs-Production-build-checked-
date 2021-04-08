@@ -82,7 +82,7 @@ const routes: any = [
   // { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
   { path: '/widgets', name: 'Widgets', component: Widgets },
   { path: "/users", exact: true, name: "Users", component: Users },
-  { path: "/users/:id", exact: true, name: "User Details", component: User },
+  { path: "/user", exact: true, name: "User Details", component: User },
 ];
 
 export default routes;
